@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Tareas Vue</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+<style>
+  .tareaRealizada {
+    text-decoration: line-through;
+  }
+</style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="taskApp"class="col-sm8 col-sm-offset-2">
+        <h1>{{nameApp}}</h1>
+        <form v-on:submit="agregarTarea">
+        <!--<form v-on:submit="agregarTarea(tareas)">-->
+             <input type="text" class="form-control" v-model="tareas.titulo">
+             <input type="submit" value="Agregar Tarea" class="btn btn-block btn-success">
+         </form>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Hecho!</th>
+              <th>Tarea</th>
+              <th>Eliminar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="jack in tareas">
+              <td>
+                <input type="checkbox" v-model="jack.hecho">
+              </td>
+              <td :class="{tareaRealizada: jack.hecho}">
+                {{jack.titulo}}
+              </td>
+              <td>
+                <button v-on:click="eliminarTarea(jack)"  type="button" name="button" class="btn btn-danger">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script type="text/javascript">
+  new Vue({
+    el: '#taskApp',
+    data: {
+      nameApp: 'Tareas App',
+      tareas: [
+        {
+          titulo: 'Tarea 1',
+          hecho: true
+        },
+        {
+          titulo: 'Tarea 2',
+            hecho: false
+        },
+
+        {
+          titulo: 'Tarea 3',
+            hecho: true
+        },
+        {
+          titulo: 'Tarea 4',
+            hecho: true
+        }
+      ]
+    },
+    methods:{
+      eliminarTarea: function (jack){
+      //  console.log(this.tareas.indexOf(jack))
+      this.tareas.splice(this.tareas.indexOf(jack),1)
+    },
+    agregarTarea: function(e){
+      e.preventDefault();
+      //console.log(e);
+      this.tareas.push({
+        titulo: this.tareas.titulo,
+        hecho: false
+      });
+      this.tareas.titulo = '';
+    }
+    }
+  })
+</script>
+  </body>
+</html>
